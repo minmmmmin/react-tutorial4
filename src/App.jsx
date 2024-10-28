@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 async function fetchVerse(name) {
   const url = `${name}.txt`;
@@ -8,6 +8,12 @@ async function fetchVerse(name) {
 
 export default function App() {
   const [content, setContent] = useState("");
+  useEffect(() => {
+    (async () => {
+      const newContent = await fetchVerse("verse1");
+      setContent(newContent);
+    })();
+  }, []);
   return (
     <>
       <h1>Fetch starting point</h1>
