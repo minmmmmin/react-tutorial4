@@ -1,5 +1,11 @@
 import { useState } from "react";
 
+async function fetchVerse(name) {
+  const url = `${name}.txt`;
+  const response = await fetch(url);
+  return response.text();
+}
+
 export default function App() {
   const [content, setContent] = useState("");
   return (
@@ -9,6 +15,11 @@ export default function App() {
         <label htmlFor="verse-choose">Choose a verse</label>
         <select
           id="verse-choose"
+          onChange={async (event) => {
+            const selectedValue = event.target.value;
+            const newContent = await fetchVerse(selectedValue);
+            setContent(newContent);
+          }}
         >
           <option value="verse1">Verse 1</option>
           <option value="verse2">Verse 2</option>
